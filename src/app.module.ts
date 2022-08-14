@@ -6,9 +6,17 @@ import { LoginModule } from './api/login/login.module';
 import { TokenService } from './services/token/token.service';
 import { TokenModule } from './services/token/token.module';
 import { ItemsModule } from './api/items/items.module';
+import { RenewTokenModule } from './api/renew-token/renew-token.module';
 
 @Module({
-  imports: [SignupModule, ValidatorModule, LoginModule, TokenModule, ItemsModule],
+  imports: [
+    SignupModule,
+    ValidatorModule,
+    LoginModule,
+    TokenModule,
+    ItemsModule,
+    RenewTokenModule,
+  ],
   controllers: [],
   providers: [ValidatorService, TokenService],
 })

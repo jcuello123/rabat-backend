@@ -20,4 +20,13 @@ export class TokenService {
       return false;
     }
   }
+
+  verifyExpiredToken(userId: number, token: string): boolean {
+    try {
+      jwt.verify(token, process.env.TOKEN_SECRET);
+      return false;
+    } catch (error) {
+      return error.message === 'jwt expired';
+    }
+  }
 }
