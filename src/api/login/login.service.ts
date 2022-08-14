@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TokenService } from 'src/services/token/token.service';
-import { getUser } from 'src/util/prisma.util';
+import { getUserByUsernameOrEmail } from 'src/util/prisma.util';
 import { LoginInfo } from './login.controller';
 const bcrypt = require('bcrypt');
 
@@ -8,6 +8,7 @@ interface LoginResult {
   success: boolean;
   token?: string;
   errors?: string[];
+  userId?: number;
 }
 
 @Injectable()
@@ -20,7 +21,7 @@ export class LoginService {
       errors: ['Invalid username or password'],
     };
 
-    const user = await getUser(
+    const user = await getUserByUsernameOrEmail(
       loginInfo.usernameOrEmail,
       loginInfo.usernameOrEmail,
       false,
@@ -39,11 +40,13 @@ export class LoginService {
       return result;
     }
 
-    const token = this.tokenService.generateToken(loginInfo.usernameOrEmail);
+    const token = this.tokenService.generateToken(user.id);
 
     result.success = true;
     result.token = token;
+    result.userId = user.id;
     result.errors = [];
+
     return result;
   }
 }

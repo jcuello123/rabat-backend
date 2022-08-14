@@ -18,7 +18,9 @@ export class LoginController {
     if (!result.success) {
       res.status(HttpStatus.BAD_REQUEST).json({ errors: result.errors });
     } else {
-      res.status(HttpStatus.OK).json({ token: result.token });
+      res
+        .status(HttpStatus.OK)
+        .json({ token: result.token, userId: result.userId });
     }
   }
 }

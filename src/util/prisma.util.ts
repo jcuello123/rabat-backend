@@ -1,6 +1,6 @@
 import prisma from 'prisma/prisma';
 
-export const getUser = async (
+export const getUserByUsernameOrEmail = async (
   email: string,
   username: string,
   includeItems: boolean,
@@ -23,5 +23,15 @@ export const getUser = async (
       ],
     },
     include: { items: includeItems },
+  });
+};
+
+export const getItems = async (userId: number) => {
+  return await prisma.item.findMany({
+    where: {
+      userId: {
+        equals: userId,
+      },
+    },
   });
 };

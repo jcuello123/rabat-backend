@@ -5,9 +5,10 @@ import { ValidatorModule } from './services/validator/validator.module';
 import { LoginModule } from './api/login/login.module';
 import { TokenService } from './services/token/token.service';
 import { TokenModule } from './services/token/token.module';
+import { ItemsModule } from './api/items/items.module';
 
 @Module({
-  imports: [SignupModule, ValidatorModule, LoginModule, TokenModule],
+  imports: [SignupModule, ValidatorModule, LoginModule, TokenModule, ItemsModule],
   controllers: [],
   providers: [ValidatorService, TokenService],
 })

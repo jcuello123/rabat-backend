@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/interfaces/user.interface';
-import { getUser } from 'src/util/prisma.util';
+import { getUserByUsernameOrEmail } from 'src/util/prisma.util';
 import { ValidatorService } from 'src/services/validator/validator.service';
 import prisma from 'prisma/prisma';
 import { SignupInfo } from './signup.controller';
@@ -18,7 +18,7 @@ export class SignupService {
 
   async signup(signupInfo: SignupInfo): Promise<SignupResult> {
     const { email, username, password } = signupInfo;
-    const user = await getUser(email, username, false);
+    const user = await getUserByUsernameOrEmail(email, username, false);
 
     if (user) {
       const res: SignupResult = {

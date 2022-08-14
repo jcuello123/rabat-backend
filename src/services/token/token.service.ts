@@ -5,11 +5,19 @@ const jwt = require('jsonwebtoken');
 export class TokenService {
   private readonly THIRTY_MINUTES = Math.floor(Date.now() / 1000) + 60 * 30;
 
-  generateToken(username: string): string {
-    const token = jwt.sign(
-      { data: username, exp: this.THIRTY_MINUTES },
+  generateToken(userId: number): string {
+    return jwt.sign(
+      { data: userId, exp: this.THIRTY_MINUTES },
       process.env.TOKEN_SECRET,
     );
-    return token;
+  }
+
+  verifyToken(userId: number, token: string): boolean {
+    try {
+      const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+      return decoded.data === userId;
+    } catch (error) {
+      return false;
+    }
   }
 }
