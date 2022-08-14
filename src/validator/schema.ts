@@ -11,14 +11,26 @@ const minHelper = (field: string, length: number) => {
 export const zUser = z.object({
   email: z
     .string()
-    .email({ message: 'Email must be in the proper format' })
-    .max(255, { message: maxHelper('Email', 255) }),
+    .email('Email must be in the proper format')
+    .max(255, maxHelper('Email', 255)),
   username: z
     .string()
-    .min(3, { message: minHelper('Username', 3) })
-    .max(20, { message: maxHelper('Username', 20) }),
+    .min(3, minHelper('Username', 3))
+    .max(20, maxHelper('Username', 20))
+    .regex(
+      new RegExp('^[a-zA-Z0-9]*$'),
+      'Username must contain only letters and numbers',
+    ),
   password: z
     .string()
-    .min(5, { message: minHelper('Password', 5) })
-    .max(50, { message: maxHelper('Password', 50) }),
+    .min(5, minHelper('Password', 5))
+    .max(50, maxHelper('Password', 50))
+    .regex(
+      new RegExp('.*[A-Z].*'),
+      'Password must contain at least one capital letter',
+    )
+    .regex(
+      new RegExp('.*[-!@#$%^&<>?;:*()_+|~=`{}[].*'),
+      'Password must contain at least one of the following symbols: .*[-!@#$%^&<>?;:*()_+|~=`{}[].* ',
+    ),
 });

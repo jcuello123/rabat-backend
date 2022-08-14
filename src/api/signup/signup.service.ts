@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/interfaces/user.interface';
+import { getUser } from 'src/util/prisma.util';
 import { ValidatorService } from 'src/validator/validator.service';
-import prisma from '../../prisma/prisma';
+import prisma from 'prisma/prisma';
+import { SignupInfo } from './signup.controller';
 const bcrypt = require('bcrypt');
 
 interface SignupResult {
@@ -14,30 +16,9 @@ interface SignupResult {
 export class SignupService {
   constructor(private validatorService: ValidatorService) {}
 
-  async signup(
-    email: string,
-    username: string,
-    password: string,
-  ): Promise<SignupResult> {
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [
-          {
-            username: {
-              equals: username,
-              mode: 'insensitive',
-            },
-          },
-          {
-            email: {
-              equals: email,
-              mode: 'insensitive',
-            },
-          },
-        ],
-      },
-      include: { items: true },
-    });
+  async signup(signupInfo: SignupInfo): Promise<SignupResult> {
+    const { email, username, password } = signupInfo;
+    const user = await getUser(email, username, false);
 
     if (user) {
       const res: SignupResult = {
