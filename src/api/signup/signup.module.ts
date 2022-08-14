@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ValidatorService } from 'src/validator/validator.service';
+import { ValidatorService } from 'src/services/validator/validator.service';
 import { SignupController } from './signup.controller';
 import { SignupService } from './signup.service';
 

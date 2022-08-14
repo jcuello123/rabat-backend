@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/interfaces/user.interface';
 import { getUser } from 'src/util/prisma.util';
-import { ValidatorService } from 'src/validator/validator.service';
+import { ValidatorService } from 'src/services/validator/validator.service';
 import prisma from 'prisma/prisma';
 import { SignupInfo } from './signup.controller';
 const bcrypt = require('bcrypt');
